@@ -1,0 +1,109 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# Import dataframe
+
+ 
+ CovidCases <- read.csv("D:/Business Analysis/Semester 2/INTRO TO ANALYTICS/Assignment/Latest Covid-19 India Status.csv")
+ 
+ 
+ str(CovidCases) 
+ 
+ names(CovidCases) 
+ 
+ head(CovidCases,15) 
+
+
+ TotalActiveCases <- function() { sum(CovidCases$Active)} 
+ TotalActiveCases() 
+
+ t(CovidCases) 
+ 
+# Omit 
+ CovidCases <- na.omit(CovidCases) 
+ CovidCases 
+
+ 
+# Created Duplicate 
+B <- tail(CovidCases, 2)
+
+B
+
+ CovidCasesWITHDUP = rbind(CovidCases,B) 
+
+ CovidCasesWITHDUP 
+
+# Remove duplicates
+ CovidCasesWITHDUP <- distinct(CovidCasesWITHDUP) 
+
+ CovidCasesWITHDUP
+
+# Desc by state name alphabetiaclly
+
+ CovidCases %>% arrange(desc(CovidCases$State.UTs)) 
+
+ CovidCases$State
+
+# Rename 
+
+ CovidCases %>% rename(X=State.UTs) 
+
+# Add/Insert columns 
+
+ CovidCases$Active_Per = (CovidCases$Active.Ratio)*100 
+ 
+ CovidCases$Active_Per
+ 
+ CovidCases$Active_DBL = (CovidCases$Active.Ratio)*2
+ 
+ CovidCases$Active_DBL
+
+# Random number generator 
+ 
+# Summary 
+
+summary(CovidCases) 
+
+# Mean 
+
+ mean(CovidCases$Total.Cases) 
+
+# Median 
+
+ median(CovidCases$Total.Cases) 
+
+# Mode 
+
+ range(CovidCases$Total.Cases) 
+
+# Range 
+
+ range(CovidCases$Total.Cases) 
+
+# Scatterplot 
+
+ plot(CovidCases$Active.Ratio...., CovidCases$Death.Ratio....) 
+
+# Bar Plot 
+
+ barplot(CovidCases$Deaths, main="Cases",   xlab="States",names.arg = CovidCases$State.UTs) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
