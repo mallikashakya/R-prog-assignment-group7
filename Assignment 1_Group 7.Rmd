@@ -1,0 +1,172 @@
+---
+title: "Assignment 1"
+author: "Mallika"
+date: "8/4/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+This analysis uses a Kaggle dataset - https://www.kaggle.com/anandhuh/latest-covid19-india-statewise-data. This dataset contains latest Covid-19 India state-wise data as on August 03, 2021. This dataset can be used to analyze Covid condition in India.
+
+## Load Dataset
+```{r echo=TRUE}
+CovidCases = read.csv("D:/Business Analysis/Semester 2/INTRO TO ANALYTICS/Assignment/Latest Covid-19 India Status.csv")
+CovidCases
+```
+
+## Structure of Dataset
+```{r echo=TRUE}
+str(CovidCases)
+```
+
+## List of Variables
+```{r echo=TRUE}
+names(CovidCases)
+```
+
+## Print the top 15 rows of dataset
+```{r echo=TRUE}
+head(CovidCases , 15)
+```
+
+## Function using any of the variables from the data set
+```{r echo=TRUE}
+TotalActiveCases <- function() { sum(CovidCases$Active)} 
+ TotalActiveCases()
+```
+
+## Data Manipulation Techniques - Filter rows with Active >20000
+```{r echo=TRUE}
+library(dplyr)
+CovidCasesFiltered <- filter (CovidCases, CovidCases$Active > 20000)
+CovidCasesFiltered
+```
+
+  
+
+
+## Create new dataset by joining dependent and independent variables
+```{r echo=TRUE}
+CovidCasesnew = cbind(CovidCases$State.UTs, CovidCases$Total.Cases, CovidCases$Active)
+CovidCasesnew
+```
+## Convert dataset from "matrix""array" to "data.frame" after cbind()
+
+```{r echo=TRUE}
+class(CovidCasesnew)
+```
+
+```{r echo=TRUE}
+CovidCasesnew = as.data.frame(CovidCasesnew)
+class(CovidCasesnew)
+```
+
+## Rename column names V1, V2, V3 in CovidCasesnew dataset
+```{r echo=TRUE}
+names(CovidCasesnew)[1] = "State.UTs"
+names(CovidCasesnew)[2] = "Total.Cases"
+names(CovidCasesnew)[3] = "Active"
+CovidCasesnew
+```
+
+## Remove missing values in CovidCases dataset
+```{r echo=TRUE}
+CovidCases <- na.omit(CovidCases) 
+CovidCases
+```
+
+## Create duplicated data in dataset
+```{r echo=TRUE}
+B <- tail(CovidCases, 2)
+B
+```
+
+## Create new dataset CovidCaseWITHDUP with duplicated data in dataset
+```{r echo=TRUE}
+CovidCasesWITHDUP = rbind(CovidCases,B) 
+CovidCasesWITHDUP
+```
+
+## Remove duplicated data in dataset CovidCasesWITHDUP
+```{r echo=TRUE}
+library(tidyverse)
+CovidCasesWITHDUP <- distinct(CovidCasesWITHDUP) 
+CovidCasesWITHDUP
+```
+
+## Reorder multiple rows in descending alphabetical order of State and Total Cases
+```{r echo=TRUE}
+CovidCases %>% arrange(desc(CovidCases$State.UTs, Total.Cases)) 
+```
+
+## Rename column name State.UTs = X in CovidCases dataset
+```{r echo=TRUE}
+CovidCases %>% rename(X=State.UTs)
+```
+
+## Add new variables/column in dataset by using a mathematical function
+```{r echo=TRUE}
+CovidCases$Active_Per = (CovidCases$Active.Ratio)*100
+CovidCases
+```
+
+```{r echo=TRUE}
+```
+
+
+## Add new variables/column in dataset by using a mathematical function
+```{r echo=TRUE}
+CovidCases$Active_DBL = data.frame(CovidCases$Active.Ratio)*2
+CovidCases$Active_DBL
+```
+
+## Extract 5 random rows without replacement using random number generator engine
+```{r echo=TRUE}
+set.seed(1234)
+CovidCases %>% sample_n(5, replace = FALSE)
+```
+
+## Summary Statistics Dataset
+```{r echo=TRUE}
+summary(CovidCases)
+```
+
+## Mean
+```{r echo=TRUE}
+mean(CovidCases$Total.Cases)
+```
+## Median
+```{r echo=TRUE}
+median(CovidCases$Total.Cases)
+```
+## Mode
+```{r echo=TRUE}
+mode(CovidCases$Total.Cases)
+```
+## Range
+```{r echo=TRUE}
+range(CovidCases$Total.Cases)
+```
+
+## Scatter Plot for Total and Death Ratio
+```{r echo=TRUE}
+ggplot(CovidCases, aes(x=Total.Cases, y=Deaths))+geom_point()
+```
+## Bar Plot 
+```{r echo=TRUE}
+barplot(CovidCases$Deaths, main="Cases",   xlab="States",names.arg = CovidCases$State.UTs)
+```
+
+
+## GIT Repository
+
+https://github.com/mallikashakya/R-prog-assignment-group7
+
+
+
+
